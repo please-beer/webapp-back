@@ -14,12 +14,12 @@ var rewardSchema = new SimpleSchema({
 });
 
 var campaignSchema = new SimpleSchema({
-    // TODO
-    // organizationId: {
-    //     type: String
-    // },
+    organizationId: {
+         type: String
+    },
     title: {
-        type: String
+        type: String,
+        optional: true
     },
     startDate: {
         type: Number,
@@ -27,6 +27,10 @@ var campaignSchema = new SimpleSchema({
     },
     endDate: {
         type: Number,
+        optional: true
+    },
+    imageUrl: {
+        type: String,
         optional: true
     },
     goal: {

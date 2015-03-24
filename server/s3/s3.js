@@ -7,20 +7,24 @@ Slingshot.fileRestrictions("pictures", {
     maxSize: 10 * 1024 * 1024
 });
 
-Slingshot.createDirective("pictures", Slingshot.S3Storage, {
-    acl: "public-read",
-    bucket: s3Config.bucket,
-    region: s3Config.region,
-    AWSAccessKeyId: s3Config.AWSAccessKeyId,
-    AWSSecretAccessKey: s3Config.AWSSecretAccessKey,
-    authorize: function () {
-        if (!this.userId) {
-            var message = "Please login before posting files";
-            throw new Meteor.Error("Login Required", message);
+if (s3Config) {
+    Slingshot.createDirective("pictures", Slingshot.S3Storage, {
+        acl: "public-read",
+        bucket: s3Config.bucket,
+        region: s3Config.region,
+        AWSAccessKeyId: s3Config.AWSAccessKeyId,
+        AWSSecretAccessKey: s3Config.AWSSecretAccessKey,
+        authorize: function () {
+            if (!this.userId) {
+                var message = "Please login before posting files";
+                throw new Meteor.Error("Login Required", message);
+            }
+            return true;
+        },
+        key: function (file) {
+            return Random.hexString(32);
         }
-        return true;
-    },
-    key: function (file) {
-        return Random.hexString(32);
-    }
-});
+    });
+} else {
+    console.error("AWS S3 bucket configuration not found!!");
+}

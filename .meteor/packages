@@ -14,3 +14,6 @@ accounts-ui
 reywood:publish-composite
 accounts-facebook
 edgee:slingshot
+email
+accounts-google
+wylio:mandrill

@@ -13,7 +13,14 @@ Mandrill.config({
 });
 
 Meteor.methods({
+  sendPaymentConfirmatinoEmail: function (title, description, price) {
+        Meteor.call('sendEmail',
+            Meteor.user().emails[0].address,
+            'Please Beer! Order confirmation',
+            '<p>Thank you for submitting your order.</p><br/>Here are your order details:<br/><b>'+title+'</b><br/>'+description+'<br/>Price: '+price+' eur<br/>Your credit card will not be charged until your beer will receive the desired ammount of orders.</br><p>Please Beer team</p>');
+  },
   sendEmail: function (to, subject, text) {
+    console.log("Function sendEmail");
     this.unblock();
     try {
       var result = Mandrill.messages.send({
